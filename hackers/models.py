@@ -27,7 +27,7 @@ class Hackathon(models.Model):
 
 class EventEdition(models.Model):
 
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     edition = models.IntegerField()
 
     def __str__(self):
@@ -53,7 +53,7 @@ class Hacker(models.Model):
     # Step 3
     school = models.ForeignKey(School, null=True)
     campus = models.ForeignKey(Campus, null=True)
-    school_id = models.CharField(max_length=50, blank=True)
+    school_identification = models.CharField(max_length=50, blank=True)
 
     E_LEVELS = (
         ('Secundaria', 'Secundaria'),

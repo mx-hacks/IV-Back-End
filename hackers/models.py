@@ -37,7 +37,7 @@ class EventEdition(models.Model):
 class Hacker(models.Model):
 
     # Step 1
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
 
     # Step 2
     first_name = models.CharField(max_length=255, blank=True)
@@ -84,10 +84,10 @@ class Hacker(models.Model):
     dietary_restrictions = models.TextField(blank=True)
 
     first_time_hacker = models.BooleanField(default=True)
-    hackathons = models.ManyToManyField(Hackathon, null=True, blank=True)
+    hackathons = models.ManyToManyField(Hackathon, blank=True)
 
     first_time_event = models.BooleanField(default=True)
-    event_participations = models.ManyToManyField(EventEdition, null=True, blank=True)
+    event_participations = models.ManyToManyField(EventEdition, blank=True)
 
     # Metadata
     created = models.DateTimeField(auto_now_add=True)

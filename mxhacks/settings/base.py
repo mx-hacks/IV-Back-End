@@ -24,6 +24,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'contact',
     'hackers',
+    'applications',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

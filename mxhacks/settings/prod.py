@@ -4,7 +4,11 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['mxhacks.dev', 'mxhacks.com']
+ALLOWED_HOSTS = [
+    'mxhacks.dev',
+    'staging.mxhacks.mx', 'api.staging.mxhacks.mx',
+    'mxhacks.mx', 'api.mxhacks.mx',
+]
 
 SECURE_HSTS_SECONDS = 60
 

@@ -7,6 +7,7 @@ from .models import Application
 class ApplicationAdmin(admin.ModelAdmin):
 
     list_display = ('id', 'hacker', 'step', 'finished', 'accepted')
+    list_editable = ('step', 'finished', 'accepted')
 
     search_fields = (
         'hacker__email',

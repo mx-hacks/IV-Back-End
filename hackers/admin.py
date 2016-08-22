@@ -46,11 +46,15 @@ class HackerAdmin(admin.ModelAdmin):
         'first_name',
         'last_name',
         'phone_number',
+        'male',
+        'female',
     )
 
     list_filter = (
         'first_time_hacker',
         'first_time_event',
+        'male',
+        'female',
         'age',
         'school',
         'education_level',

@@ -10,4 +10,11 @@ class SponsorsView(APIView):
         serializer = SponsorSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         sponsor = serializer.save()
-        return Response({'status': 'ok'})
+        if sponsor:
+            return Response({
+                'status': 'ok',
+                'message': 'Mail sent to sponsorships team.',
+                'data': serializer.data
+            })
+        else:
+            return Response({'status': 'error'})

@@ -1,0 +1,10 @@
+<p>En <b>{{ company }}</b> están interesados en el MX Hacks. ¡Contáctalos!</p>
+<p>Los datos de contacto usados fueron los siguientes: </p><br>
+<p>First name: {{ first_name }}</p>
+<p>Last name: {{ last_name }}</p>
+<p>Company: {{ company }}</p>
+<p>E-mail: {{ email }}</p>
+
+{% if message %}
+    <p>Message: {{ message }}</p>
+{% endif %}

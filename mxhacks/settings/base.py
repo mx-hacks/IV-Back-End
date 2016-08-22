@@ -22,7 +22,7 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-
+    'contact',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -120,3 +120,8 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     )
 }
+
+MAILGUN_ENDPOINT = env('MAILGUN_ENDPOINT')
+MAILGUN_API_KEY = env('MAILGUN_API_KEY')
+
+SPONSORS_MAIL = env('SPONSORS_MAIL')

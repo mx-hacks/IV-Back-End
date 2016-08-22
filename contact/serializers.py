@@ -3,7 +3,7 @@ from django.template.loader import render_to_string
 
 from rest_framework import serializers
 
-from .models import Sponsor
+from .models import Sponsor, Hacker
 
 from mxhacks.utils import send_mail
 
@@ -46,4 +46,43 @@ class SponsorSerializer(serializers.ModelSerializer):
             return sponsor
 
         else:
-            return None
+            return Sponsor()
+
+
+class HackerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hacker
+        fields = (
+            'name',
+            'email',
+            'message',
+        )
+
+    def create(self, data):
+        message = render_to_string('contact/support.html', data)
+
+        mail = {
+            'subject': '[Sporte MX Hacks] - {}'.format(data['name']),
+            'from': '{name} <{email}>'.format(
+                name=data['name'],
+                email=data['email']
+            ),
+            'to': [settings.SUPPORT_MAIL],
+            'html': message
+        }
+        mailgun_data = send_mail(data=mail)
+
+        if mailgun_data.status_code == 200:
+            message_id = mailgun_data.json()['id']
+            hacker = Hacker()
+            hacker.name = data['name']
+            hacker.email = data['email']
+            hacker.message = data['message']
+            hacker.sent = True
+            hacker.message_id = message_id
+            hacker.save()
+            return hacker
+
+        else:
+            return Hacker()

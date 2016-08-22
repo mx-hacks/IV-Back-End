@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Sponsor
+from .models import Sponsor, Hacker
 
 
 @admin.register(Sponsor)
@@ -24,5 +24,24 @@ class SponsorAdmin(admin.ModelAdmin):
 
     list_filter = (
         'created',
-        'modified',
+    )
+
+
+@admin.register(Hacker)
+class HackerAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'id', 
+        'name', 
+        'email', 
+        'message',
+    )
+
+    search_fields = (
+        'name', 
+        'email', 
+    )
+
+    list_filter = (
+        'created',
     )

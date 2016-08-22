@@ -21,3 +21,23 @@ class Sponsor(models.Model):
 
     class Meta:
         ordering = ('-created',)
+
+
+class Hacker(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+
+    # Metadata
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    # Mailgun
+    mail_sent = models.BooleanField(default=False)
+    message_id = models.CharField(max_length=400)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('-created',)

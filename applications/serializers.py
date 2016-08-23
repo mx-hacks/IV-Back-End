@@ -42,3 +42,10 @@ class PersonalInfoSerializer(serializers.Serializer):
         elif data['male'] and data['female']:
             raise serializers.ValidationError('Wrong gender.')
         return data
+
+
+class EdcuationSerializer(serializers.Serializer):
+
+    school = serializers.IntegerField(min_value=1)
+    campus = serializers.IntegerField(min_value=1)
+    school_identification = serializers.CharField(max_length=50)

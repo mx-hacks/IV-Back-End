@@ -5,6 +5,7 @@ from .mixins import HackerMixin
 from .models import Application
 
 from .serializers import (
+    EdcuationSerializer,
     NewApplicationSerializer,
     PersonalInfoSerializer,
 )
@@ -55,3 +56,11 @@ class PersonalInfoView(HackerMixin, APIView):
             'phone_number': self.hacker.phone_number,
             'email': self.hacker.email,
         })
+
+
+class EducationView(HackerMixin, APIView):
+
+    def put(self, request, email, step, format='json'):
+        serializer = EdcuationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.data

@@ -1,10 +1,12 @@
 from django.shortcuts import get_object_or_404
 
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
 )
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Campus, School
 
@@ -18,6 +20,8 @@ class SchoolsView(CreateAPIView, ListAPIView):
 
     serializer_class = SchoolSerializer
     queryset = School.objects.all().order_by('name')
+    filter_backends = (SearchFilter,)
+    search_fields = ('name',)
 
     def create(self, request):
         name = request.data.get('name', '')
@@ -45,6 +49,8 @@ class SchoolsView(CreateAPIView, ListAPIView):
 class CampusView(ListAPIView, CreateAPIView):
     
     serializer_class = CampusSerializer
+    filter_backends = (SearchFilter,)
+    search_fields = ('name',)
 
     def get_queryset(self):
         return Campus.objects.filter(school=self.kwargs['pk'])
@@ -75,3 +81,15 @@ class CampusView(ListAPIView, CreateAPIView):
         campus.save()
         serializer = CampusSerializer(campus)
         return Response(serializer.data, status=201)
+
+
+class ELevelsView(APIView):
+
+    def get(self, request, format='json'):
+        return Response([
+            'Secundaria',
+            'Preparatoria',
+            'Bachillerato',
+            'Maestría',
+            'Doctorado',
+        ])

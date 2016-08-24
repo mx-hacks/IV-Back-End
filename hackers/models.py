@@ -66,8 +66,8 @@ class Hacker(models.Model):
     education_level = models.CharField(choices=E_LEVELS, blank=True, max_length=20)
     major = models.CharField(max_length=80, blank=True)
 
-    school_join_date = models.DateField(null=True)
-    school_graduation_date = models.DateField(null=True)
+    school_join_year = models.IntegerField(default=0)
+    school_graduation_year = models.IntegerField(default=0)
 
     T_SHIRT_SIZES = (
         ('Chica - Mujer', 'S-W'),

@@ -34,11 +34,7 @@ class HackerMixin(object):
                     'status': 'error',
                     'message': 'Application closed.'
                 })
-            if step != application.step:
-                return JsonResponse({
-                    'status': 'error',
-                    'message': 'Invalid application step.'
-                })
+
         self.hacker = hacker
         self.application = application
         return super(HackerMixin, self).dispatch(request, *args, **kwargs)

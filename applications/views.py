@@ -12,7 +12,7 @@ from .serializers import (
     PersonalInfoSerializer,
 )
 
-from hackers.models import Campus, School
+from hackers.models import Campus, School, Hackathon, EventEdition
 from hackers.serializers import HackerSerializer
 
 
@@ -116,5 +116,83 @@ class ExperienceView(HackerMixin, APIView):
         return Response({
             'status': 'ok',
             'message': 'Experience info updated.',
+            'hacker': HackerSerializer(self.hacker).data
+        })
+
+
+class HackathonsView(HackerMixin, APIView):
+
+    def put(self, request, email, format='json'):
+        hackathons = request.data.get('hackathons', None)
+        if not hackathons:
+            return Response({
+                'status': 'error',
+                'message': 'Missing hackathons data.'
+            }, status=400)
+
+        if type(hackathons) != list:
+            return Response({
+                'status': 'error',
+                'message': 'A list of hackathons IDs is required.'
+            }, status=400)
+
+        hs = []
+        for h in hackathons:
+            try:
+                hackathon = Hackathon.objects.get(pk=h)
+            except:
+                return Response({
+                    'status': 'error',
+                    'message': 'Hackathon {} does not exist.'.format(h)
+                })
+            hs.append(hackathon)
+
+        self.hacker.hackathons.clear()
+        self.hacker.save()
+        self.hacker.hackathons.add(*hs)
+        self.hacker.save()
+
+        return Response({
+            'status': 'ok',
+            'message': 'Hackathons added to hacker experience.',
+            'hacker': HackerSerializer(self.hacker).data
+        })
+
+
+class EventsView(HackerMixin, APIView):
+
+    def put(self, request, email, format='json'):
+        events = request.data.get('events', None)
+        if not events:
+            return Response({
+                'status': 'error',
+                'message': 'Missing events data.'
+            }, status=400)
+
+        if type(events) != list:
+            return Response({
+                'status': 'error',
+                'message': 'A list of events IDs is required.'
+            }, status=400)
+
+        es = []
+        for e in events:
+            try:
+                event = EventEdition.objects.get(pk=e)
+            except:
+                return Response({
+                    'status': 'error',
+                    'message': 'Event {} does not exist.'.format(e)
+                })
+            es.append(event)
+
+        self.hacker.event_participations.clear()
+        self.hacker.save()
+        self.hacker.event_participations.add(*es)
+        self.hacker.save()
+
+        return Response({
+            'status': 'ok',
+            'message': 'Events added to hacker experience.',
             'hacker': HackerSerializer(self.hacker).data
         })

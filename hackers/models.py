@@ -32,7 +32,7 @@ class EventEdition(models.Model):
     edition = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return '{} {}'.format(self.name, self.edition)
 
 
 class Hacker(models.Model):

@@ -23,6 +23,8 @@ class HackerSerializer(serializers.ModelSerializer):
 
     school = SchoolSerializer()
     campus = CampusSerializer()
+    hackathons = serializers.StringRelatedField(many=True)
+    event_participations = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Hacker
@@ -45,6 +47,8 @@ class HackerSerializer(serializers.ModelSerializer):
             'tshirt_size',
             'dietary_restrictions',
             'first_time_hacker',
+            'hackathons',
+            'event_participations',
             'first_time_event',
             'created',
             'modified',

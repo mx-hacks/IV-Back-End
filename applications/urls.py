@@ -2,8 +2,10 @@ from django.conf.urls import url
 
 from .views import (
     EducationView,
+    EventsView,
     ExperienceView,
     GoodiesView,
+    HackathonsView,
     NewApplicationView,
     PersonalInfoView,
 )
@@ -32,7 +34,19 @@ urlpatterns = [
     url(
         r'^(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/experience/$',
         ExperienceView.as_view(),
-        name='goodies',
-    )
+        name='experience',
+    ),
+
+    url(
+        r'^(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/hackathons/$',
+        HackathonsView.as_view(),
+        name='hackathons',
+    ),
+
+    url(
+        r'^(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/events/$',
+        EventsView.as_view(),
+        name='events',
+    ),
 
 ]

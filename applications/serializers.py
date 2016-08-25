@@ -103,3 +103,32 @@ class EdcuationSerializer(serializers.Serializer):
                 'Campus is not part of the selected school.'
             )
         return data
+
+
+class GoodiesSerializer(serializers.Serializer):
+
+    tshirt_size = serializers.CharField(max_length=22, trim_whitespace=True)
+    dietary_restrictions = serializers.CharField(
+        trim_whitespace=True,
+        required=False
+    )
+
+    def validate_tshirt_size(self, size):
+        sizes = [
+            'Chica - Mujer',
+            'Mediana - Mujer',
+            'Grande - Mujer',
+            'Extra Grande - Mujer',
+            'Chica - Hombre',
+            'Mediana - Hombre',
+            'Grande - Hombre',
+            'Extra Grande - Hombre',
+        ]
+        if size not in sizes:
+            raise serializers.ValidationError('Invalid size')
+        return size
+
+
+class ExperienceSerializer(serializers.Serializer):
+
+    first_time_hacker = serializers.BooleanField(default=True)

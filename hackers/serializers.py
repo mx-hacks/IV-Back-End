@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Campus, Hacker, School
+from .models import Campus, Hacker, School, EventEdition, Hackathon
 
 
 class SchoolSerializer(serializers.ModelSerializer):
@@ -49,3 +49,17 @@ class HackerSerializer(serializers.ModelSerializer):
             'created',
             'modified',
         )
+
+
+class HackathonSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hackathon
+        fields = ('id', 'name')
+
+
+class EventEditionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EventEdition
+        fields = ('id', 'name', 'edition')

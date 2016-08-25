@@ -6,6 +6,8 @@ from .models import Application
 
 from .serializers import (
     EdcuationSerializer,
+    ExperienceSerializer,
+    GoodiesSerializer,
     NewApplicationSerializer,
     PersonalInfoSerializer,
 )
@@ -61,8 +63,6 @@ class EducationView(HackerMixin, APIView):
         serializer.is_valid(raise_exception=True)
         data = serializer.data
 
-        print (data)
-
         self.hacker.school = School.objects.get(pk=data['school'])
         self.hacker.campus = Campus.objects.get(pk=data['campus'])
         self.hacker.school_join_year = data['school_join_year']
@@ -72,9 +72,49 @@ class EducationView(HackerMixin, APIView):
         self.hacker.major = data['major']
         self.hacker.save()
 
+        self.hacker.application.step = 3
+        self.hacker.application.save()
+
         return Response({
             'status': 'ok',
             'message': 'Education info updated.',
             'hacker': HackerSerializer(self.hacker).data
         })
 
+
+class GoodiesView(HackerMixin, APIView):
+
+    def put(self, request, email, format='json'):
+        serializer = GoodiesSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.data
+
+        self.hacker.tshirt_size = data['tshirt_size']
+        self.hacker.dietary_restrictions = data.get('dietary_restrictions', '')
+        self.hacker.save()
+
+        self.hacker.application.step = 4
+        self.hacker.application.save()
+
+        return Response({
+            'status': 'ok',
+            'message': 'Goodies info updated.',
+            'hacker': HackerSerializer(self.hacker).data
+        })
+
+
+class ExperienceView(HackerMixin, APIView):
+
+    def put(self, request, email, format='json'):
+        serializer = ExperienceSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.data
+
+        self.hacker.first_time_hacker = data['first_time_hacker']
+        self.hacker.save()
+
+        return Response({
+            'status': 'ok',
+            'message': 'Experience info updated.',
+            'hacker': HackerSerializer(self.hacker).data
+        })

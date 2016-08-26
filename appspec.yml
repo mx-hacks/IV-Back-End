@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+files:
+   - source: /
+     destination: /home/api/
+     owner: ubuntu
+     mode: 755
+hooks:
+   BeforeInstall:
+    - location: scripts/say_sup.sh
+      runas: root
+   AfterInstall:
+    - location: scripts/restart.sh
+      runas: root

@@ -12,11 +12,9 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 class CampusSerializer(serializers.ModelSerializer):
 
-    school = SchoolSerializer()
-
     class Meta:
         model = Campus
-        fields = ('id', 'school', 'name')
+        fields = ('id', 'name')
 
 
 class HackerSerializer(serializers.ModelSerializer):

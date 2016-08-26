@@ -11,6 +11,7 @@ class School(models.Model):
 
 class Campus(models.Model):
 
+    school = models.ForeignKey(School)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -27,17 +28,17 @@ class Hackathon(models.Model):
 
 class EventEdition(models.Model):
 
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     edition = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return '{} {}'.format(self.name, self.edition)
 
 
 class Hacker(models.Model):
 
     # Step 1
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
 
     # Step 2
     first_name = models.CharField(max_length=255, blank=True)
@@ -53,7 +54,7 @@ class Hacker(models.Model):
     # Step 3
     school = models.ForeignKey(School, null=True)
     campus = models.ForeignKey(Campus, null=True)
-    school_id = models.CharField(max_length=50, blank=True)
+    school_identification = models.CharField(max_length=50, blank=True)
 
     E_LEVELS = (
         ('Secundaria', 'Secundaria'),
@@ -65,8 +66,8 @@ class Hacker(models.Model):
     education_level = models.CharField(choices=E_LEVELS, blank=True, max_length=20)
     major = models.CharField(max_length=80, blank=True)
 
-    school_join_date = models.DateField(null=True)
-    school_graduation_date = models.DateField(null=True)
+    school_join_year = models.IntegerField(default=0)
+    school_graduation_year = models.IntegerField(default=0)
 
     T_SHIRT_SIZES = (
         ('Chica - Mujer', 'S-W'),
@@ -84,10 +85,10 @@ class Hacker(models.Model):
     dietary_restrictions = models.TextField(blank=True)
 
     first_time_hacker = models.BooleanField(default=True)
-    hackathons = models.ManyToManyField(Hackathon, null=True, blank=True)
+    hackathons = models.ManyToManyField(Hackathon, blank=True)
 
     first_time_event = models.BooleanField(default=True)
-    event_participations = models.ManyToManyField(EventEdition, null=True, blank=True)
+    event_participations = models.ManyToManyField(EventEdition, blank=True)
 
     # Metadata
     created = models.DateTimeField(auto_now_add=True)

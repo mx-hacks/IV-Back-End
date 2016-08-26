@@ -196,3 +196,17 @@ class EventsView(HackerMixin, APIView):
             'message': 'Events added to hacker experience.',
             'hacker': HackerSerializer(self.hacker).data
         })
+
+
+class FinishView(HackerMixin, APIView):
+
+    def put(self, request, email, format='json'):
+        self.hacker.application.finished = True
+        self.hacker.application.step = 5
+        self.hacker.application.save()
+
+        return Response({
+            'status': 'ok',
+            'message': 'Application finished successfully!.',
+            'hacker': HackerSerializer(self.hacker).data
+        })

@@ -4,6 +4,7 @@ from .views import (
     EducationView,
     EventsView,
     ExperienceView,
+    FinishView,
     GoodiesView,
     HackathonsView,
     NewApplicationView,
@@ -47,6 +48,12 @@ urlpatterns = [
         r'^(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/events/$',
         EventsView.as_view(),
         name='events',
+    ),
+
+    url(
+        r'^(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/finish/$',
+        FinishView.as_view(),
+        name='finish',
     ),
 
 ]

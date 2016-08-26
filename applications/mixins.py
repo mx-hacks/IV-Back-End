@@ -25,7 +25,7 @@ class HackerMixin(object):
             return JsonResponse({
                 'status': 'error',
                 'message': 'Application does not exist.'
-            })
+            }, status=400)
 
         if application:
             application = hacker.application
@@ -33,7 +33,7 @@ class HackerMixin(object):
                 return JsonResponse({
                     'status': 'error',
                     'message': 'Application closed.'
-                })
+                }, status=400)
 
         self.hacker = hacker
         self.application = application

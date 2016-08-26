@@ -2,7 +2,7 @@
 
 HOME_DIR='/home/api/'
 ENVIRONMENT_DIR='/home/api/environment'
-PROJECT_DIR='/home/api/project'
+PROJECT_DIR='/home/api/project/'
 
 cd $ENVIRONMENT_DIR
 source vars.sh

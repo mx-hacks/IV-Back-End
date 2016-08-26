@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
    - source: /
-     destination: /home/api/
+     destination: /home/api/project/
      owner: ubuntu
      mode: 755
 hooks:

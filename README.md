@@ -40,6 +40,7 @@ export SUPER_SECRET_VARIABLE=''
 * [Django Environ 0.4.0](https://github.com/joke2k/django-environ)
 * [Django Rest Framework](http://www.django-rest-framework.org/)
 * [Mailgun](https://mailgun.com/app/dashboard)
+* [AWS Code Deploy](https://aws.amazon.com/codedeploy/)
 
 ## Authors
 

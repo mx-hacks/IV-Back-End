@@ -19,6 +19,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'rest_framework',
+    'corsheaders',
 )
 
 LOCAL_APPS = (
@@ -32,6 +33,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -99,9 +101,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 STATIC_ROOT = str(BASE_DIR('staticfiles'))
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    str(BASE_DIR.path('static')),
-)
+# STATICFILES_DIRS = (
+    # str(BASE_DIR.path('static')),
+# )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -128,3 +130,5 @@ MAILGUN_API_KEY = env('MAILGUN_API_KEY')
 
 SPONSORS_MAIL = env('SPONSORS_MAIL')
 SUPPORT_MAIL = env('SUPPORT_MAIL')
+
+CORS_ORIGIN_ALLOW_ALL = True

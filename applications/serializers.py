@@ -81,6 +81,7 @@ class EdcuationSerializer(serializers.Serializer):
             'Secundaria',
             'Preparatoria',
             'Bachillerato',
+            'Universidad',
             'Maestría',
             'Doctorado',
         ]

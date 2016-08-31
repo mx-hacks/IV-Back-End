@@ -60,6 +60,7 @@ class Hacker(models.Model):
         ('Secundaria', 'Secundaria'),
         ('Preparatoria', 'Preparatoria'),
         ('Bachillerato', 'Bachillerato'),
+        ('Universidad', 'Universidad'),
         ('Maestría', 'Maestría'),
         ('Doctorado', 'Doctorado'),
     )

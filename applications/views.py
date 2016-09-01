@@ -169,11 +169,7 @@ class EventsView(HackerMixin, APIView):
                 'message': 'Missing events data.'
             }, status=400)
 
-        if type(events) != list:
-            return Response({
-                'status': 'error',
-                'message': 'A list of events IDs is required.'
-            }, status=400)
+        events = [x for x in events.split(',') if type(x) == int]
 
         es = []
         for e in events:

@@ -161,7 +161,7 @@ class HackathonsView(HackerMixin, APIView):
 
 class EventsView(HackerMixin, APIView):
 
-    def put(self, request, email, format='json'):
+    def post(self, request, email, format='json'):
         events = request.data.get('events', None)
         if not events:
             return Response({

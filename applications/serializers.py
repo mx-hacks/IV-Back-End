@@ -31,6 +31,18 @@ class PersonalInfoSerializer(serializers.Serializer):
         trim_whitespace = True,
     )
 
+    country = serializers.CharField(
+        max_length = 255,
+        min_length = 2,
+        trim_whitespace = True,
+    )
+
+    state = serializers.CharField(
+        max_length = 255,
+        min_length = 2,
+        trim_whitespace = True,
+    )
+
     age = serializers.IntegerField(
         min_value = 12,
         max_value = 80

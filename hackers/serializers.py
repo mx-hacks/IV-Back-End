@@ -34,6 +34,8 @@ class HackerSerializer(serializers.ModelSerializer):
             'age',
             'male',
             'female',
+            'country',
+            'state',
             'phone_number',
             'school',
             'campus',

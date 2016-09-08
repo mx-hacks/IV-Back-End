@@ -91,6 +91,9 @@ class Hacker(models.Model):
     first_time_event = models.BooleanField(default=True)
     event_participations = models.ManyToManyField(EventEdition, blank=True)
 
+    country = models.CharField(max_length=255, blank=True)
+    state = models.CharField(max_length=255, blank=True)
+
     # Metadata
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

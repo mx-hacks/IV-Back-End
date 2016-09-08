@@ -47,6 +47,8 @@ class PersonalInfoView(HackerMixin, APIView):
         self.hacker.male = data['male']
         self.hacker.female = data['female']
         self.hacker.phone_number = data['phone_number']
+        self.hacker.country = data['country']
+        self.hacker.state = data['state']
         self.hacker.save()
 
         return Response({

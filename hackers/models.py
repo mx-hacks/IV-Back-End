@@ -89,6 +89,7 @@ class Hacker(models.Model):
     hackathons = models.ManyToManyField(Hackathon, blank=True)
 
     first_time_event = models.BooleanField(default=True)
+    currently_working = models.BooleanField(default=True)
     event_participations = models.ManyToManyField(EventEdition, blank=True)
 
     country = models.CharField(max_length=255, blank=True)

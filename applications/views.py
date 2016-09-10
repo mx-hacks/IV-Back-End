@@ -113,6 +113,7 @@ class ExperienceView(HackerMixin, APIView):
         data = serializer.data
 
         self.hacker.first_time_hacker = data['first_time_hacker']
+        self.hacker.currently_working = data['currently_working']
         self.hacker.save()
 
         return Response({

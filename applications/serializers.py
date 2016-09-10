@@ -145,3 +145,4 @@ class GoodiesSerializer(serializers.Serializer):
 class ExperienceSerializer(serializers.Serializer):
 
     first_time_hacker = serializers.BooleanField(default=True)
+    currently_working = serializers.BooleanField(default=True)

@@ -133,12 +133,7 @@ class HackathonsView(HackerMixin, APIView):
                 'message': 'Missing hackathons data.'
             }, status=400)
 
-        if type(hackathons) != list:
-            return Response({
-                'status': 'error',
-                'message': 'A list of hackathons IDs is required.'
-            }, status=400)
-
+        hackathons = [x for x in hackathons.split(',') if type(x) == int]
         hs = []
         for h in hackathons:
             try:

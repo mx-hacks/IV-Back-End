@@ -133,7 +133,9 @@ class HackathonsView(HackerMixin, APIView):
                 'message': 'Missing hackathons data.'
             }, status=400)
 
-        hackathons = [x for x in hackathons.split(',') if type(x) == int]
+        print (hackathons)
+        hackathons = [x for x in hackathons.split(',')]
+        print (hackathons)
         hs = []
         for h in hackathons:
             try:
@@ -167,7 +169,7 @@ class EventsView(HackerMixin, APIView):
                 'message': 'Missing events data.'
             }, status=400)
 
-        events = [x for x in events.split(',') if type(x) == int]
+        events = [x for x in events.split(',')]
 
         es = []
         for e in events:

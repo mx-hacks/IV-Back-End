@@ -50,6 +50,7 @@ class HackerSerializer(serializers.ModelSerializer):
             'hackathons',
             'event_participations',
             'first_time_event',
+            'currently_working',
             'created',
             'modified',
         )

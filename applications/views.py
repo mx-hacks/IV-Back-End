@@ -204,3 +204,17 @@ class FinishView(HackerMixin, APIView):
             'message': 'Application finished successfully!.',
             'hacker': HackerSerializer(self.hacker).data
         })
+
+
+class PromoCodeView(HackerMixin, APIView):
+
+    def put(self, request, email, format='json'):
+        promo_code = request.data.get('promo_code', '')
+        self.hacker.application.promo_code = promo_code
+        self.hacker.application.save()
+
+        return Response({
+            'status': 'ok',
+            'message': 'Promo code added to application.',
+            'hacker': HackerSerializer(self.hacker).data
+        })

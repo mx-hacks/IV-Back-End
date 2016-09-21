@@ -61,3 +61,5 @@ class HackerAdmin(admin.ModelAdmin):
         'tshirt_size',
         'hackathons',
     )
+
+    raw_id_fields = ('school', 'campus',)

@@ -3,9 +3,9 @@ $(function() {
     $.ajax({
         url: 'api/stats/applications/',
         success: function (response) {
-            labels = response.map(function(obj) {return obj.day});
-            data = response.map(function(obj) {return obj.applications});
-            var scatterChart = new Chart($('#applicationsChart'), {
+            var labels = response.map(function(obj) {return obj.day});
+            var data = response.map(function(obj) {return obj.applications});
+            var applicationsChart = new Chart($('#applicationsChart'), {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -44,6 +44,32 @@ $(function() {
                         }]
                     }
                 }
+            });
+        }
+    });
+
+    $.ajax({
+        url: 'api/stats/applications/pie/',
+        success: function (response) {
+            var finished = response.progress.finished;
+            var total = response.progress.total;
+            var statusChart = new Chart($('#applicationsStatus'),{
+                type: 'pie',
+                data: {
+                    labels: ['Finished', 'Lost'],
+                    datasets: [
+                        {
+                            data: [
+                                Math.round(response.progress.finished_proportion, 2),
+                                100 - Math.round(response.progress.finished_proportion)
+                            ],
+                            backgroundColor: [
+                                '#141414',
+                                '#fb1855',
+                            ]
+                        }   
+                    ]
+                },
             });
         }
     });

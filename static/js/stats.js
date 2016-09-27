@@ -21,7 +21,7 @@ $(function() {
                     },
                     elements: {
                         line: {
-                            tension: .8,
+                            tension: .2,
                             backgroundColor: 'rgba(39, 39, 39, .5)',
                             borderWidth: 1,
                             borderColor: 'rgba(236, 25, 91, 1)',

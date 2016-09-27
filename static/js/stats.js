@@ -135,7 +135,7 @@ $(function() {
                 });
 
                 school_campus = school.campus;
-                campus_template = $('.school-table-row-template');
+                campus_template = school_element.find('.school-table-row-template');
                 campus_container = school_element.find('tbody');
 
                 campus_bars_id = 'school-bars-' + school.id;
@@ -199,6 +199,17 @@ $(function() {
                             campus_accepted,
                             campus_lost
                         ]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true,
+                                display: false
+                            }]
+                        }
                     }
                 });
 

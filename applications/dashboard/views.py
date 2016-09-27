@@ -86,6 +86,7 @@ class EducationStats(AdminSession, APIView):
                 campus_hackers = Hacker.objects.filter(school=s, campus=c)
                 campus = {
                     'name': c.name,
+                    'id': c.pk,
                     'totals': {
                         'total': campus_hackers.count(),
                         'finished': sum([ch.application.finished for ch in campus_hackers]), # NOQA

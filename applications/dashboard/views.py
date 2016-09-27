@@ -113,7 +113,7 @@ class DemographicsView(AdminSession, APIView):
     def get(self, request, format='json'):
         hackers = Hacker.objects.all()
         ages = {'missing': 0}
-        gender = {'males': 0, 'females': 0, 'missing': 0,}
+        gender = {'males': 0, 'females': 0}
         education_level = {
             'secundaria': 0,
             'preparatoria': 0,
@@ -157,13 +157,10 @@ class DemographicsView(AdminSession, APIView):
                 ages['missing'] += 1
 
             # Gender
-            if not h.male and not h.female:
-                if h.male:
-                    gender['males'] += 1
-                if h.female:
-                    gender['females'] += 1
-            else:
-                gender['missing'] += 1
+            if h.male:
+                gender['males'] += 1
+            if h.female:
+                gender['females'] += 1
 
             # Education Level
             if h.education_level:

@@ -204,6 +204,7 @@ $(function() {
                         scales: {
                             xAxes: [{
                                 stacked: true,
+                                display: false
                             }],
                             yAxes: [{
                                 stacked: true,
@@ -213,6 +214,57 @@ $(function() {
                     }
                 });
 
+            });
+        }
+    });
+
+    $.ajax({
+        url: 'api/stats/demographics/',
+        success: function (response) {
+            var experienceChart = new Chart($('#gender-graph'), {
+                type: 'pie',
+                data: {
+                    labels: ['Males', 'Females'],
+                    datasets: [
+                        {
+                            data: [
+                                response.gender.males,
+                                response.gender.females,
+                            ],
+                            backgroundColor: [
+                                '#141414',
+                                '#fb1855'
+                            ]
+                        }   
+                    ]
+                }
+            });
+
+            var agesChart = new Chart($('#ages-graph'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(response.ages),
+                    datasets: [
+                        {
+                            data: Object.keys(response.ages).map(function (e) {return response.ages[e];}),
+                            backgroundColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(54, 162, 235)',
+                                'rgb(255, 206, 86)',
+                                'rgb(75, 192, 192)',
+                                'rgb(153, 102, 255)',
+                                'rgb(255, 159, 64)',
+                                '#141414',
+                                '#fb1855',
+                                '#4af16d',
+                                '#01ffd5',
+                            ]
+                        }   
+                    ]
+                },
+                options: {
+                    legend: {display: false},
+                }
             });
         }
     });

@@ -112,8 +112,8 @@ class EducationStats(AdminSession, APIView):
 class DemographicsView(AdminSession, APIView):
 
     def get(self, request, format='json'):
-        hackers = Hacker.objects.all()
-        ages = {'missing': 0}
+        hackers = Hacker.objects.filter(application__finished=True)
+        ages = {}
         gender = {'males': 0, 'females': 0}
         education_level = {
             'secundaria': 0,
@@ -148,14 +148,11 @@ class DemographicsView(AdminSession, APIView):
         for h in hackers:
 
             # Age count
-            if h.age:
-                age = ages.get(str(h.age), None)
-                if age:
-                    ages[str(h.age)] += 1
-                else:
-                    ages[str(h.age)] = 1
+            age = ages.get(str(h.age), None)
+            if age:
+                ages[str(h.age)] += 1
             else:
-                ages['missing'] += 1
+                ages[str(h.age)] = 1
 
             # Gender
             if h.male:

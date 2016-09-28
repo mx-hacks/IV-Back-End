@@ -18,3 +18,12 @@ class AdminSession(StaffSession):
         if not request.user.is_superuser:
             raise PermissionDenied
         return super(AdminSession, self).dispatch(request, *args, **kwargs)
+
+
+class ReviewerSession(StaffSession):
+
+    def dispatch(self, request, *args, **kwargs):
+        q = request.user.groups.filter(name='Reviewers')
+        if not q and not request.user.is_superuser:
+            raise PermissionDenied
+        return super(ReviewerSession, self).dispatch(request, *args, **kwargs)

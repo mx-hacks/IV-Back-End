@@ -37,7 +37,10 @@
                 <li {% if request.path == export_url %}class="active"{% endif %}>
                     <a href="{{ export_url }}">Export Applications (GE)</a>
                 </li>
-                <li>
+
+                {% url "applications_dashboard:review" as review_url %}
+                <li {% if request.path == review_url %}class="active"{% endif %}>
+                    <a href="{{ review_url }}">Applications Review</a>
                 </li>
             </ul>
         </nav>

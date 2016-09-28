@@ -13,12 +13,17 @@ from .views import (
     CSVView,
     ExportView,
 
+    # Review
+    ReviewApplications,
+
 )
 
 urlpatterns = [
 
     url(r'^export/$', ExportView.as_view(), name='export'),
     url(r'^export/(?P<pk>\d+)/$', CSVView.as_view(), name='csv'),
+
+    url(r'^review/$', ReviewApplications.as_view(), name='review'),
 
     url(r'^api/stats/applications/$', ApplicationsStat.as_view(), name='applications_stats'),
     url(r'^api/stats/applications/pie/$', ApplicationsPie.as_view(), name='applications_pie'),

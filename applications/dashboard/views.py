@@ -3,7 +3,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import View, TemplateView
 
-from mxhacks.mixins import AdminSession, StaffSession
+from mxhacks.mixins import AdminSession, ReviewerSession, StaffSession
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -328,4 +328,8 @@ class CSVView(AdminSession, View):
             ])
 
         return response
-        pass
+
+
+class ReviewApplications(ReviewerSession, TemplateView):
+
+    template_name = 'dashboard/review.html'

@@ -92,6 +92,7 @@ class ELevelsView(APIView):
             'Secundaria',
             'Preparatoria',
             'Bachillerato',
+            'Universidad',
             'Maestría',
             'Doctorado',
         ])

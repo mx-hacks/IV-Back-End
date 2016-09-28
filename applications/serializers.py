@@ -31,6 +31,18 @@ class PersonalInfoSerializer(serializers.Serializer):
         trim_whitespace = True,
     )
 
+    country = serializers.CharField(
+        max_length = 255,
+        min_length = 2,
+        trim_whitespace = True,
+    )
+
+    state = serializers.CharField(
+        max_length = 255,
+        min_length = 2,
+        trim_whitespace = True,
+    )
+
     age = serializers.IntegerField(
         min_value = 12,
         max_value = 80
@@ -81,6 +93,7 @@ class EdcuationSerializer(serializers.Serializer):
             'Secundaria',
             'Preparatoria',
             'Bachillerato',
+            'Universidad',
             'Maestría',
             'Doctorado',
         ]
@@ -132,3 +145,4 @@ class GoodiesSerializer(serializers.Serializer):
 class ExperienceSerializer(serializers.Serializer):
 
     first_time_hacker = serializers.BooleanField(default=True)
+    currently_working = serializers.BooleanField(default=True)

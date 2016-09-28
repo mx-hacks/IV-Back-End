@@ -1,6 +1,7 @@
 # MX Hacks Back End
 
 This repository contains the source code of the API used on the application process.
+This also comes with and analytics dashboard and an _export applications_ features.
 
 ## Getting Started
 

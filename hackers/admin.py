@@ -55,9 +55,15 @@ class HackerAdmin(admin.ModelAdmin):
         'first_time_event',
         'male',
         'female',
+        'country',
+        'state',
         'age',
         'school',
         'education_level',
         'tshirt_size',
         'hackathons',
     )
+
+    search_fields = ('email', 'first_name', 'last_name', 'phone_number')
+
+    raw_id_fields = ('school', 'campus',)

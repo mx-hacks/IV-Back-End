@@ -1,0 +1,187 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Applications status</h2>
+        </div>
+        <div class="col-xs-4">
+            <h4 class="text-center">Applications</h4>
+            <canvas id="applicationsStatus"></canvas>
+            <h4 class="text-center">Steps</h4>
+            <canvas id="stepsStatus"></canvas>
+        </div>
+        <div class="col-xs-2">
+            <div class="div">
+                <h4>Total applications</h4>
+                <p>{{ applications.total }}</p>
+                <hr>
+                <h4>Finished</h4>
+                <p>{{ applications.finished }}</p>
+                <hr>
+                <h4>Accepted</h4>
+                <p>{{ applications.accepted }}</p>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Applications over the time</div>
+                <div class="panel-body">
+                    <canvas id="applicationsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row" id="demographics">
+        <div class="col-xs-12">
+            <h2>Demographics</h2>
+            <p><small>Based in the finished applications: <span class="badge">{{ applications.finished }}</span></small></p>
+        </div>
+        <div class="col-xs-2">
+            <p class="text-center">Ages</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Age</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody id="ages-container">
+                    <tr class="ages-row-template" style="display: none;">
+                        <td class="age-number"></td>
+                        <td class="age-quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-3">
+            <p class="text-center">Experience</p>
+            <canvas id="experience-graph"></canvas>
+            <hr>
+            <p class="text-center">Currently Working</p>
+            <canvas id="work-graph"></canvas>
+            <hr>
+            <p class="text-center">T-Shirt Size</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody id="shirt-container">
+                    <tr class="shirt-row-template" style="display: none;">
+                        <td class="shirt-size"></td>
+                        <td class="shirt-quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-3">
+            <p class="text-center">Gender</p>
+            <canvas id="gender-graph"></canvas>
+            <hr>
+            <p class="text-center">Education Level</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody id="education-container">
+                    <tr class="education-row-template" style="display: none;">
+                        <td class="education-level"></td>
+                        <td class="education-quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-4">
+            <p class="text-center">Locations</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody id="location-container">
+                    <tr class="location-row-template" style="display: none;">
+                        <td class="location-country"></td>
+                        <td class="location-state"></td>
+                        <td class="location-quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="row" id="schools">
+        <div class="col-xs-12">
+            <h2>Applications per school</h2>
+        </div>
+        <div class="col-xs-12 school-template" style="display: none;">
+            <div class="panel panel-default">
+                <div class="school-name panel-heading"></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <p><strong>Applications:</strong> <span class="school-applications"></span></p>
+                                    <p><strong>Finished:</strong> <span class="school-finished"></span></p>
+                                    <p><strong>Accepted:</strong> <span class="school-accepted"></span></p>
+                                </div>
+                                <div class="col-xs-6">
+                                    <canvas class="school-pie-canvas"></canvas>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p><strong>School's compus</strong></p>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Applications</th>
+                                                <th>Finished</th>
+                                                <th>Lost</th>
+                                                <th>Accepted</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="school-table-row-template" style="display: none;">
+                                                <td class="campus-id"></td>
+                                                <td class="campus-name"></td>
+                                                <td class="campus-applications"></td>
+                                                <td class="campus-finished"></td>
+                                                <td class="campus-lost"></td>
+                                                <td class="campus-accepted"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <canvas class="school-campus-bars"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.js"></script>
+    <script src="{% static "js/stats.js" %}"></script>
+{% endblock %}

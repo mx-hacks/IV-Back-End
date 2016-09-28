@@ -64,4 +64,6 @@ class HackerAdmin(admin.ModelAdmin):
         'hackathons',
     )
 
+    search_fields = ('email', 'first_name', 'last_name', 'phone_number')
+
     raw_id_fields = ('school', 'campus',)

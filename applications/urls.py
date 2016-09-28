@@ -9,6 +9,7 @@ from .views import (
     HackathonsView,
     NewApplicationView,
     PersonalInfoView,
+    PromoCodeView,
 )
 
 urlpatterns = [
@@ -55,5 +56,12 @@ urlpatterns = [
         FinishView.as_view(),
         name='finish',
     ),
+
+    url(
+        r'^(?P<email>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/promo_code/$',
+        PromoCodeView.as_view(),
+        name='promo_code',
+    ),
+
 
 ]

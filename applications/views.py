@@ -47,6 +47,8 @@ class PersonalInfoView(HackerMixin, APIView):
         self.hacker.male = data['male']
         self.hacker.female = data['female']
         self.hacker.phone_number = data['phone_number']
+        self.hacker.country = data['country']
+        self.hacker.state = data['state']
         self.hacker.save()
 
         return Response({
@@ -111,6 +113,7 @@ class ExperienceView(HackerMixin, APIView):
         data = serializer.data
 
         self.hacker.first_time_hacker = data['first_time_hacker']
+        self.hacker.currently_working = data['currently_working']
         self.hacker.save()
 
         return Response({
@@ -130,12 +133,9 @@ class HackathonsView(HackerMixin, APIView):
                 'message': 'Missing hackathons data.'
             }, status=400)
 
-        if type(hackathons) != list:
-            return Response({
-                'status': 'error',
-                'message': 'A list of hackathons IDs is required.'
-            }, status=400)
-
+        print (hackathons)
+        hackathons = [x for x in hackathons.split(',')]
+        print (hackathons)
         hs = []
         for h in hackathons:
             try:
@@ -161,7 +161,7 @@ class HackathonsView(HackerMixin, APIView):
 
 class EventsView(HackerMixin, APIView):
 
-    def put(self, request, email, format='json'):
+    def post(self, request, email, format='json'):
         events = request.data.get('events', None)
         if not events:
             return Response({
@@ -169,11 +169,7 @@ class EventsView(HackerMixin, APIView):
                 'message': 'Missing events data.'
             }, status=400)
 
-        if type(events) != list:
-            return Response({
-                'status': 'error',
-                'message': 'A list of events IDs is required.'
-            }, status=400)
+        events = [x for x in events.split(',')]
 
         es = []
         for e in events:
@@ -208,5 +204,19 @@ class FinishView(HackerMixin, APIView):
         return Response({
             'status': 'ok',
             'message': 'Application finished successfully!.',
+            'hacker': HackerSerializer(self.hacker).data
+        })
+
+
+class PromoCodeView(HackerMixin, APIView):
+
+    def put(self, request, email, format='json'):
+        promo_code = request.data.get('promo_code', '')
+        self.hacker.application.promo_code = promo_code
+        self.hacker.application.save()
+
+        return Response({
+            'status': 'ok',
+            'message': 'Promo code added to application.',
             'hacker': HackerSerializer(self.hacker).data
         })

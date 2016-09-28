@@ -60,6 +60,7 @@ class Hacker(models.Model):
         ('Secundaria', 'Secundaria'),
         ('Preparatoria', 'Preparatoria'),
         ('Bachillerato', 'Bachillerato'),
+        ('Universidad', 'Universidad'),
         ('Maestría', 'Maestría'),
         ('Doctorado', 'Doctorado'),
     )
@@ -88,7 +89,11 @@ class Hacker(models.Model):
     hackathons = models.ManyToManyField(Hackathon, blank=True)
 
     first_time_event = models.BooleanField(default=True)
+    currently_working = models.BooleanField(default=True)
     event_participations = models.ManyToManyField(EventEdition, blank=True)
+
+    country = models.CharField(max_length=255, blank=True)
+    state = models.CharField(max_length=255, blank=True)
 
     # Metadata
     created = models.DateTimeField(auto_now_add=True)

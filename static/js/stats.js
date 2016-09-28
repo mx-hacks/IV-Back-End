@@ -181,13 +181,13 @@ $(function() {
 
             educationRowTemplate = $('.education-row-template');
             educationContainer = $('#education-container');
-            for (var el in response.t_shirt_size) {
+            for (var el in response.education_level) {
                 educationElement = educationRowTemplate.clone();
                 educationElement.show();
                 educationElement.removeClass('education-row-template');
 
                 educationElement.find('.education-level').text(el);
-                educationElement.find('.education-quantity').text(response.t_shirt_size[el]);
+                educationElement.find('.education-quantity').text(response.education_level[el]);
 
                 educationContainer.append(educationElement);
             }

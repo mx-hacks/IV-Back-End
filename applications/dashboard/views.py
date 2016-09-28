@@ -1,10 +1,18 @@
-from mxhacks.mixins import StaffSession
+from django.http import HttpResponse
+from django.shortcuts import redirect, get_object_or_404
+from django.urls import reverse
+from django.views.generic import View, TemplateView
+
+from mxhacks.mixins import AdminSession, StaffSession
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from applications.models import Application
+from applications.models import Application, Batch
 from hackers.models import Campus, Hacker, School
+
+import csv
+from datetime import date
 
 
 class ApplicationsStat(StaffSession, APIView):
@@ -229,3 +237,95 @@ class PunchCardView(StaffSession, APIView):
             ret_val[week[_.created.date().weekday()]][_.created.hour] += 1  # NOQA
 
         return Response(ret_val)
+
+
+class ExportView(AdminSession, TemplateView):
+
+    template_name = 'dashboard/export.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ExportView, self).get_context_data(**kwargs)
+        context['batches'] = Batch.objects.all().order_by('-created')
+        return context
+
+    def post(self, request):
+        start_date = request.POST.get('start_date', None)
+        end_date = request.POST.get('end_date', None)
+
+        if not any([start_date, end_date]):
+            return redirect(reverse('applications_dashboard:export'))
+
+        try:
+            start_date = [int(x) for x in start_date.split('-')]
+            start_date = date(start_date[0], start_date[1], start_date[2])
+
+            end_date = [int(x) for x in end_date.split('-')]
+            end_date = date(end_date[0], end_date[1], end_date[2])
+        except:
+            return redirect(reverse('applications_dashboard:export'))
+
+        batch = Batch()
+        batch.created_by = request.user
+        batch.start_date = start_date
+        batch.end_date = end_date
+        batch.save()
+
+        return redirect(reverse('applications_dashboard:export'))
+
+
+class CSVView(AdminSession, View):
+
+    def get(self, request, pk):
+        batch = get_object_or_404(Batch, pk=pk)
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="MXHacksIV_{}_{}.csv"'.format(
+            str(batch.start_date),
+            str(batch.end_date),
+        )
+
+        batch.requested += 1
+        batch.save()
+
+        writer = csv.writer(response)
+        writer.writerow([
+            'ID',
+            'First Name',
+            'Last Name',
+            'Age',
+            'Gender',
+            'School',
+            'Campus',
+            'Major',
+            'School Join Year',
+            'School Graduation Year',
+            'Currently Working',
+            'Country',
+            'State'
+        ])
+
+        q = Application.objects.filter(
+            finished = True,
+            created__gte = batch.start_date,
+            created__lte = batch.end_date
+        )
+
+        for application in q:
+            hacker = application.hacker
+            writer.writerow([
+                hacker.pk,
+                hacker.first_name.title(),
+                hacker.last_name.title(),
+                hacker.age,
+                'Male' if hacker.male else 'Female',
+                hacker.school.name,
+                hacker.campus.name,
+                hacker.major,
+                hacker.school_join_year,
+                hacker.school_graduation_year,
+                'Yes' if hacker.currently_working else 'No',
+                hacker.country,
+                hacker.state
+            ])
+
+        return response
+        pass

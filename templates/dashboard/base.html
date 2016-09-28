@@ -32,8 +32,10 @@
                 <li {% if request.path == stats_url%}class="active"{% endif %}>
                     <a href="{{ stats_url }}">Analytics</a>
                 </li>
-                <li {% if True %} {% endif %}>
-                    <a href="#">Export Applications</a>
+
+                {% url "applications_dashboard:export" as export_url %}
+                <li {% if request.path == export_url %} {% endif %}>
+                    <a href="{{ export_url }}">Export Applications (GE)</a>
                 </li>
                 <li>
                 </li>

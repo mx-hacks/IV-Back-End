@@ -55,6 +55,8 @@ class HackerAdmin(admin.ModelAdmin):
         'first_time_event',
         'male',
         'female',
+        'country',
+        'state',
         'age',
         'school',
         'education_level',

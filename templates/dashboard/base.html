@@ -34,7 +34,7 @@
                 </li>
 
                 {% url "applications_dashboard:export" as export_url %}
-                <li {% if request.path == export_url %} {% endif %}>
+                <li {% if request.path == export_url %}class="active"{% endif %}>
                     <a href="{{ export_url }}">Export Applications (GE)</a>
                 </li>
                 <li>

@@ -102,7 +102,7 @@ class EducationStats(AdminSession, APIView):
                     'finished': sum([h.application.finished for h in school_hackers]), # NOQA
                     'accepted': sum([h.application.accepted for h in school_hackers]), # NOQA
                 },
-                'campus': campuss
+                'campus': sorted(campuss, key=lambda x: x['totals']['total'])[::-1]
             }
             schools.append(school)
 

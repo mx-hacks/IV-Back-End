@@ -116,34 +116,30 @@ class DemographicsView(StaffSession, APIView):
         ages = {}
         gender = {'males': 0, 'females': 0}
         education_level = {
-            'secundaria': 0,
-            'preparatoria': 0,
-            'bachillerato': 0,
-            'universidad': 0,
-            'maestría': 0,
-            'doctorado': 0,
-            'missing': 0
+            'Secundaria': 0,
+            'Preparatoria': 0,
+            'Universidad': 0,
+            'Maestría': 0,
+            'Doctorado': 0,
         }
         t_shirt_size = {
-            'S-W': 0,
-            'M-W': 0,
-            'L-W': 0,
-            'XL-W': 0,
-            'S-M': 0,
-            'M-M': 0,
-            'L-M': 0,
-            'XL-M': 0,
-            'missing': 0
+            'Small Women': 0,
+            'Medium Women': 0,
+            'Large Women': 0,
+            'Extra Large Women': 0,
+            'Small Men': 0,
+            'Medium Men': 0,
+            'Large Men': 0,
+            'Extra Large Men': 0,
         }
 
         experience = {
             'first_time_hacker': 0,
             'first_time_event': 0,
-            'missing': 0
         }
 
-        working = {'true': 0, 'false': 0, 'missing': 0}
-        locations = {'missing': 0}
+        working = {'true': 0, 'false': 0}
+        locations = {}
 
         for h in hackers:
 
@@ -161,67 +157,52 @@ class DemographicsView(StaffSession, APIView):
                 gender['females'] += 1
 
             # Education Level
-            if h.education_level:
-                if h.education_level == 'Secundaria':
-                    education_level['secundaria'] += 1
-                if h.education_level == 'Preparatoria':
-                    education_level['preparatoria'] += 1
-                if h.education_level == 'Bachillerato':
-                    education_level['bachillerato'] += 1
-                if h.education_level == 'Universidad':
-                    education_level['universidad'] += 1
-                if h.education_level == 'Maestría':
-                    education_level['maestría'] += 1
-                if h.education_level == 'Doctorado':
-                    education_level['doctorado'] += 1
-            else:
-                education_level['missing'] += 1
+            if h.education_level == 'Secundaria':
+                education_level['Secundaria'] += 1
+            if h.education_level in ['Preparatoria', 'Bachillerato']:
+                education_level['Preparatoria'] += 1
+            if h.education_level == 'Universidad':
+                education_level['Universidad'] += 1
+            if h.education_level == 'Maestría':
+                education_level['Maestría'] += 1
+            if h.education_level == 'Doctorado':
+                education_level['Doctorado'] += 1
 
             # T-Shirt Size
-            if h.tshirt_size:
-                if h.tshirt_size == 'S-W':
-                    t_shirt_size['S-W'] += 1
-                if h.tshirt_size == 'M-W':
-                    t_shirt_size['M-W'] += 1
-                if h.tshirt_size == 'L-W':
-                    t_shirt_size['L-W'] += 1
-                if h.tshirt_size == 'XL-W':
-                    t_shirt_size['XL-W'] += 1
-                if h.tshirt_size == 'S-M':
-                    t_shirt_size['S-M'] += 1
-                if h.tshirt_size == 'M-M':
-                    t_shirt_size['M-M'] += 1
-                if h.tshirt_size == 'L-M':
-                    t_shirt_size['L-M'] += 1
-                if h.tshirt_size == 'XL-M':
-                    t_shirt_size['XL-M'] += 1
-            else:
-                t_shirt_size['missing'] += 1
+            if h.tshirt_size == 'Chica - Mujer':
+                t_shirt_size['Small Women'] += 1
+            if h.tshirt_size == 'Mediana - Mujer':
+                t_shirt_size['Medium Women'] += 1
+            if h.tshirt_size == 'Grande - Mujer':
+                t_shirt_size['Large Women'] += 1
+            if h.tshirt_size == 'Extra Grande - Mujer':
+                t_shirt_size['Extra Large Women'] += 1
+            if h.tshirt_size == 'Chica - Hombre':
+                t_shirt_size['Small Men'] += 1
+            if h.tshirt_size == 'Mediana - Hombre':
+                t_shirt_size['Medium Men'] += 1
+            if h.tshirt_size == 'Grande - Hombre':
+                t_shirt_size['Large Men'] += 1
+            if h.tshirt_size == 'Extra Grande - Hombre':
+                t_shirt_size['Extra Large Men'] += 1
 
             # Experience and working status
-            if h.application.step >= 4:
-                if h.first_time_hacker:
-                    experience['first_time_hacker'] += 1
-                if h.first_time_event:
-                    experience['first_time_event'] += 1
+            if h.first_time_hacker:
+                experience['first_time_hacker'] += 1
+            if h.first_time_event:
+                experience['first_time_event'] += 1
 
-                if h.currently_working:
-                    working['true'] += 1
-                else:
-                    working['false'] += 1
+            if h.currently_working:
+                working['true'] += 1
             else:
-                experience['missing'] += 1
-                working['missing'] += 1
+                working['false'] += 1
 
             # Location
-            if h.country and h.state:
-                location = locations.get(h.state + ', ' + h.country, None)
-                if location:
-                    locations[h.state + ', ' + h.country] += 1
-                else:
-                    locations[h.state + ', ' + h.country] = 1
+            location = locations.get(h.state + ', ' + h.country, None)
+            if location:
+                locations[h.state + ', ' + h.country] += 1
             else:
-                locations['missing'] += 1
+                locations[h.state + ', ' + h.country] = 1
 
         demos = {
             'total': hackers.count(),

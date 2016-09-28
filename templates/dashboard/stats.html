@@ -5,6 +5,9 @@
 
 {% block content %}
     <div class="row">
+        <div class="col-xs-12">
+            <h2>Applications status</h2>
+        </div>
         <div class="col-xs-4">
             <h4 class="text-center">Applications</h4>
             <canvas id="applicationsStatus"></canvas>
@@ -38,13 +41,84 @@
             <h2>Demographics</h2>
             <p><small>Based in the finished applications: <span class="badge">{{ applications.finished }}</span></small></p>
         </div>
+        <div class="col-xs-2">
+            <p class="text-center">Ages</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Age</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody id="ages-container">
+                    <tr class="ages-row-template" style="display: none;">
+                        <td class="age-number"></td>
+                        <td class="age-quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-3">
+            <p class="text-center">Experience</p>
+            <canvas id="experience-graph"></canvas>
+            <hr>
+            <p class="text-center">Currently Working</p>
+            <canvas id="work-graph"></canvas>
+            <hr>
+            <p class="text-center">T-Shirt Size</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody id="shirt-container">
+                    <tr class="shirt-row-template" style="display: none;">
+                        <td class="shirt-size"></td>
+                        <td class="shirt-quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="col-xs-3">
             <p class="text-center">Gender</p>
             <canvas id="gender-graph"></canvas>
+            <hr>
+            <p class="text-center">Education Level</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody id="education-container">
+                    <tr class="education-row-template" style="display: none;">
+                        <td class="education-level"></td>
+                        <td class="education-quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="col-xs-3">
-            <p class="text-center">Ages</p>
-            <canvas id="ages-graph"></canvas>
+        <div class="col-xs-4">
+            <p class="text-center">Locations</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody id="location-container">
+                    <tr class="location-row-template" style="display: none;">
+                        <td class="location-country"></td>
+                        <td class="location-state"></td>
+                        <td class="location-quantity"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <hr>

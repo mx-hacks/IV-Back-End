@@ -67,6 +67,9 @@ $(function() {
                             ]
                         }   
                     ]
+                },
+                options: {
+                    cutoutPercentage: 50
                 }
             });
             var stepsChart = new Chart($('#stepsStatus'), {
@@ -90,7 +93,132 @@ $(function() {
                         }   
                     ]
                 },
+                options: {
+                    cutoutPercentage: 50
+                }
             });
+        }
+    });
+
+    $.ajax({
+        url: 'api/stats/demographics/',
+        success: function (response) {
+            var genderChart = new Chart($('#gender-graph'), {
+                type: 'pie',
+                data: {
+                    labels: ['Males', 'Females'],
+                    datasets: [
+                        {
+                            data: [
+                                response.gender.males,
+                                response.gender.females,
+                            ],
+                            backgroundColor: [
+                                '#141414',
+                                '#fb1855'
+                            ]
+                        }   
+                    ]
+                }
+            });
+
+            var experienceChart = new Chart($('#experience-graph'), {
+                type: 'pie',
+                data: {
+                    labels: ['First time hacker', 'First time event'],
+                    datasets: [
+                        {
+                            data: [
+                                response.experience.first_time_hacker,
+                                response.experience.first_time_event,
+                            ],
+                            backgroundColor: [
+                                '#141414',
+                                '#fb1855'
+                            ]
+                        }   
+                    ]
+                },
+                options: {
+                    cutoutPercentage: 30
+                }
+            });
+
+            var workChart = new Chart($('#work-graph'), {
+                type: 'pie',
+                data: {
+                    labels: ['True', 'False'],
+                    datasets: [
+                        {
+                            data: [
+                                response.working.true,
+                                response.working.false,
+                            ],
+                            backgroundColor: [
+                                '#141414',
+                                '#01ffd5'
+                            ]
+                        }   
+                    ]
+                },
+                options: {
+                    cutoutPercentage: 30
+                }
+            });
+
+            ageRowTemplate = $('.ages-row-template');
+            ageContainer = $('#ages-container');
+            for (var age in response.ages) {
+                ageElement = ageRowTemplate.clone();
+                ageElement.show();
+                ageElement.removeClass('ages-row-template');
+
+                ageElement.find('.age-number').text(age);
+                ageElement.find('.age-quantity').text(response.ages[age]);
+
+                ageContainer.append(ageElement);
+            }
+
+            educationRowTemplate = $('.education-row-template');
+            educationContainer = $('#education-container');
+            for (var el in response.t_shirt_size) {
+                educationElement = educationRowTemplate.clone();
+                educationElement.show();
+                educationElement.removeClass('education-row-template');
+
+                educationElement.find('.education-level').text(el);
+                educationElement.find('.education-quantity').text(response.t_shirt_size[el]);
+
+                educationContainer.append(educationElement);
+            }
+
+            shirtRowTemplate = $('.shirt-row-template');
+            shirtContainer = $('#shirt-container');
+            for (var tSize in response.t_shirt_size) {
+                shirtElement = shirtRowTemplate.clone();
+                shirtElement.show();
+                shirtElement.removeClass('shirt-row-template');
+
+                shirtElement.find('.shirt-size').text(tSize);
+                shirtElement.find('.shirt-quantity').text(response.t_shirt_size[tSize]);
+
+                shirtContainer.append(shirtElement);
+            }
+
+            locationRowTemplate = $('.location-row-template');
+            locationContainer = $('#location-container');
+            for (var location in response.locations) {
+                locationElement = locationRowTemplate.clone();
+                locationElement.show();
+                locationElement.removeClass('location-row-template');
+
+                locationElement.find('.location-country').text(location.split(',')[1]);
+                locationElement.find('.location-state').text(location.split(',')[0]);
+                locationElement.find('.location-quantity').text(response.locations[location]);
+
+                locationContainer.append(locationElement);
+            }
+
         }
     });
 
@@ -214,57 +342,6 @@ $(function() {
                     }
                 });
 
-            });
-        }
-    });
-
-    $.ajax({
-        url: 'api/stats/demographics/',
-        success: function (response) {
-            var experienceChart = new Chart($('#gender-graph'), {
-                type: 'pie',
-                data: {
-                    labels: ['Males', 'Females'],
-                    datasets: [
-                        {
-                            data: [
-                                response.gender.males,
-                                response.gender.females,
-                            ],
-                            backgroundColor: [
-                                '#141414',
-                                '#fb1855'
-                            ]
-                        }   
-                    ]
-                }
-            });
-
-            var agesChart = new Chart($('#ages-graph'), {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(response.ages),
-                    datasets: [
-                        {
-                            data: Object.keys(response.ages).map(function (e) {return response.ages[e];}),
-                            backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 206, 86)',
-                                'rgb(75, 192, 192)',
-                                'rgb(153, 102, 255)',
-                                'rgb(255, 159, 64)',
-                                '#141414',
-                                '#fb1855',
-                                '#4af16d',
-                                '#01ffd5',
-                            ]
-                        }   
-                    ]
-                },
-                options: {
-                    legend: {display: false},
-                }
             });
         }
     });

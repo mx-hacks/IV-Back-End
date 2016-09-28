@@ -25,6 +25,21 @@
                 </div>
             </div>
         </nav>
+
+        <nav>
+            <ul class="nav nav-tabs">
+                {% url "hackers_dashboard:stats" as stats_url %}
+                <li {% if request.path == stats_url%}class="active"{% endif %}>
+                    <a href="{{ stats_url }}">Analytics</a>
+                </li>
+                <li {% if True %} {% endif %}>
+                    <a href="#">Export Applications</a>
+                </li>
+                <li>
+                </li>
+            </ul>
+        </nav>
+
         {% block content %}{% endblock %}
     </div>
 

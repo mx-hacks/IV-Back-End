@@ -1,4 +1,4 @@
-from mxhacks.mixins import AdminSession
+from mxhacks.mixins import StaffSession
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,7 +7,7 @@ from applications.models import Application
 from hackers.models import Campus, Hacker, School
 
 
-class ApplicationsStat(AdminSession, APIView):
+class ApplicationsStat(StaffSession, APIView):
 
     def get(self, request, format='json'):
         applications = Application.objects.all().order_by('created')
@@ -36,7 +36,7 @@ class ApplicationsStat(AdminSession, APIView):
         return Response(daily_applications)
 
 
-class ApplicationsPie(AdminSession, APIView):
+class ApplicationsPie(StaffSession, APIView):
 
     def get(self, request, format='json'):
         total = Application.objects.all().count()
@@ -73,7 +73,7 @@ class ApplicationsPie(AdminSession, APIView):
         })
 
 
-class EducationStats(AdminSession, APIView):
+class EducationStats(StaffSession, APIView):
 
     def get(self, request, format='json'):
         schools_q = School.objects.all()
@@ -109,7 +109,7 @@ class EducationStats(AdminSession, APIView):
         return Response(sorted(schools, key=lambda x: x['totals']['total'])[::-1])
 
 
-class DemographicsView(AdminSession, APIView):
+class DemographicsView(StaffSession, APIView):
 
     def get(self, request, format='json'):
         hackers = Hacker.objects.filter(application__finished=True)
@@ -237,7 +237,7 @@ class DemographicsView(AdminSession, APIView):
         return Response(demos)
 
 
-class PunchCardView(AdminSession, APIView):
+class PunchCardView(StaffSession, APIView):
 
     def get(self, request, format='json'):
         q = Application.objects.all()

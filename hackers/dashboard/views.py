@@ -1,11 +1,11 @@
 from django.views.generic import TemplateView
 
-from mxhacks.mixins import AdminSession
+from mxhacks.mixins import StaffSession
 
 from applications.models import Application
 
 
-class StatsView(AdminSession, TemplateView):
+class StatsView(StaffSession, TemplateView):
     
     template_name = 'dashboard/stats.html'
 

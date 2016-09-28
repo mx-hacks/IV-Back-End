@@ -106,7 +106,7 @@ class EducationStats(AdminSession, APIView):
             }
             schools.append(school)
 
-        return Response(reversed(schools, key=lambda x: x['totals']['total']))
+        return Response(sorted(schools, key=lambda x: x['totals']['total'])[::-1])
 
 
 class DemographicsView(AdminSession, APIView):

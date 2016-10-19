@@ -309,6 +309,7 @@ class CSVView(AdminSession, View):
             'T-Shirt Size',
             'Dietary restrictions',
             'First time hacker',
+            'Invitation code',
         ])
 
         q = Application.objects.filter(
@@ -338,6 +339,7 @@ class CSVView(AdminSession, View):
                 hacker.tshirt_size.split(' - ')[0],
                 hacker.dietary_restrictions,
                 'Yes' if hacker.first_time_hacker else 'No',
+                application.promo_code
             ])
 
         return response

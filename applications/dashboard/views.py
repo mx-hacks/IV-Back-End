@@ -8,11 +8,14 @@ from mxhacks.mixins import AdminSession, ReviewerSession, StaffSession
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from applications.models import Application, Batch
+from applications.models import Application, Batch, Review
 from hackers.models import Campus, Hacker, School
+
+from hackers.serializers import HackerSerializer
 
 import csv
 from datetime import date
+import random
 
 
 class ApplicationsStat(StaffSession, APIView):
@@ -289,6 +292,7 @@ class CSVView(AdminSession, View):
         writer = csv.writer(response)
         writer.writerow([
             'ID',
+            'E-mail',
             'First Name',
             'Last Name',
             'Age',
@@ -296,11 +300,15 @@ class CSVView(AdminSession, View):
             'School',
             'Campus',
             'Major',
+            'School ID',
             'School Join Year',
             'School Graduation Year',
             'Currently Working',
             'Country',
-            'State'
+            'State',
+            'T-Shirt Size',
+            'Dietary restrictions',
+            'First time hacker',
         ])
 
         q = Application.objects.filter(
@@ -313,6 +321,7 @@ class CSVView(AdminSession, View):
             hacker = application.hacker
             writer.writerow([
                 hacker.pk,
+                hacker.email,
                 hacker.first_name.title(),
                 hacker.last_name.title(),
                 hacker.age,
@@ -320,11 +329,15 @@ class CSVView(AdminSession, View):
                 hacker.school.name,
                 hacker.campus.name,
                 hacker.major,
+                hacker.school_identification,
                 hacker.school_join_year,
                 hacker.school_graduation_year,
                 'Yes' if hacker.currently_working else 'No',
                 hacker.country,
-                hacker.state
+                hacker.state,
+                hacker.tshirt_size.split(' - ')[0],
+                hacker.dietary_restrictions,
+                'Yes' if hacker.first_time_hacker else 'No',
             ])
 
         return response
@@ -333,3 +346,25 @@ class CSVView(AdminSession, View):
 class ReviewApplications(ReviewerSession, TemplateView):
 
     template_name = 'dashboard/review.html'
+
+
+class ReviewDetail(ReviewerSession, APIView):
+
+    def get(self, request, format='json'):
+        q = Application.objects.filter(
+            finished=True,
+            reviews__lte=6,
+        ).values('id')
+
+        reviewed = Review.objects.filter(reviewer=request.user).values('application') # NOQA
+
+        q_ids = [_['id'] for _ in q]
+        r_ids = [_['id'] for _ in reviewed]
+
+        ids = [_ for _ in q_ids if _ not in r_ids]
+        pk = random.choice(ids)
+
+        application = Application.objects.get(pk=pk)
+        hacker = HackerSerializer(application.hacker).data
+
+        return Response(hacker)

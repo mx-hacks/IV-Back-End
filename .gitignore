@@ -91,3 +91,7 @@ ENV/
 .DS_Store
 
 dummy_data.py
+
+Consoles/
+
+*.ipynb

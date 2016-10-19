@@ -4,10 +4,86 @@
 {% block title %}Applications Review{% endblock %}
 
 {% block content %}
+
+    <div id="constants" style="display:none">
+        <p id="reviews-url">{% url "applications_dashboard:review-detail" %}</p>
+    </div>
+
     <div class="row">
         <div class="col-xs-12">
             <h1>Applications Review.</h1>
-            <p><small>Improve the selection process by reviewing random applications.</small></p>
+            <p>Improve the selection process by reviewing random applications.</p>
+            <p><small>1 review = 1 GIF ♥️</small></p>
+            <hr>
+        </div>
+        <div class="col-xs-3">
+            <div class="btn-group" role="group" >
+                <a href="#" class="btn btn-success">Accept</a>
+                <a href="#" class="btn btn-danger">Reject</a>
+                <a href="" class="btn btn-default">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </a>
+            </div> <br> <br>
+            <img src="http://i.giphy.com/13Xkz5sLdjGiQw.gif" class="img-responsive img-thumbnail" id="hacker-avatar" />
+        </div>
+        <div class="col-xs-9" style="display:none" id="hacker-data">
+            <div class="row">
+                <div class="col-xs-6 text-center">
+                    <h4>
+                        <span class="first-name"></span> 
+                        <span class="last-name"></span>
+                    </h4>
+                    <p>
+                        <span class="gender"></span>, 
+                        <span class="age"></span> years old.
+                    </p>
+                </div>
+                <div class="col-xs-6 text-center">
+                    <h4 class="state"></h4>
+                    <p class="country"></p>
+                </div>
+            </div><hr>
+            <div class="row">
+                <div class="col-xs-4">
+                    <p>
+                        First time hacker:
+                        <span class="label label-info f_t_h"></span>
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <p>
+                        First time event:
+                        <span class="label label-info f_t_e"></span>
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <p>
+                        Currently working:
+                        <span class="label label-info c_working"></span>
+                    </p>
+                </div>
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4"></div>
+            </div><hr>
+            <div class="row">
+                <div class="col-xs-4">
+                    <h4>School</h4>
+                    <p class="school"></p>
+                </div>
+                <div class="col-xs-4">
+                    <h4>Campus</h4>
+                    <p class="campus"></p>
+                </div>
+                <div class="col-xs-4">
+                    <h4>Major</h4>
+                    <p class="major"></p>
+                </div>
+            </div>
+
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "js/review.js" %}"></script>
 {% endblock %}
